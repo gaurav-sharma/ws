@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <title>Heart beat implementation using Web Sockets</title>
+    <style type="text/css">
+        #console {
+            border: 1px solid black;
+            width: 500px;
+            height: 250px;
+            overflow-x: auto;
+            padding: 5px;  
+        }
+    </style>
+</head>
+<body>
+
+	<h1>Response</h1>
+	
+	<div id="console"></div>
+
+	<script type="text/javascript">
+	(function() {
+		// use 'wss://' if SSL is setup
+	    var socket = new WebSocket('ws://localhost:8080/ws/echo');
+	    var console = document.getElementById('console');
+
+	    socket.onmessage = function(event) {
+	        console.innerHTML +=  event.data + '<br />';
+	    }
+	
+	    setInterval(function () {socket.send(JSON.stringify({'timestamp': Date.now()}));}, 3000);  
+	}());
+	</script>
+	
+</body>
+</html>
